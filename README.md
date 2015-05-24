@@ -18,7 +18,9 @@ $ /Applications/VMware\ Fusion.app/Contents/Library/vmrun \
 ## Configure kubectl
 
 ```
-$ kubectl config set clusters.local.server http://$vm-ip-address:8080
+$ kubectl config set-cluster local --server=http://$vm-ip-address:8080
+$ kubectl config set-context local --cluster=local
+$ kubectl config use-context local
 ```
 
 You now have a single node ready for use.
