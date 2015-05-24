@@ -15,6 +15,8 @@ $ /Applications/VMware\ Fusion.app/Contents/Library/vmrun \
   start output-vmware-iso/kubestack-solo.vmx
 ```
 
+![Kubestack Solo Login Screen](docs/kubestack-solo-fusion.png)
+
 ## Configure kubectl
 
 ```
