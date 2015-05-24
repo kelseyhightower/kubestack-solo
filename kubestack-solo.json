@@ -10,9 +10,9 @@
     "iso_checksum_type": "sha1",
     "boot_wait": "15s",
     "boot_command": [
-        "sudo passwd core<enter><wait>",
-        "kubestack<enter><wait>",
-        "kubestack<enter><wait>"
+        "sudo passwd core<enter><wait5>",
+        "kubestack<enter><wait5>",
+        "kubestack<enter><wait5>"
     ],
     "headless": true,
     "ssh_username": "core",
