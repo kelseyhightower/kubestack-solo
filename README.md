@@ -36,5 +36,6 @@ NAME        LABELS    STATUS
 ## Logging In
 
 ```
+$ chmod 600 files/kubestack_id_rsa
 $ ssh -i files/kubestack_id_rsa core@$vm-ip-address
 ```
