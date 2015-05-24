@@ -1,0 +1,7 @@
+enable docker.service
+enable etcd.service
+enable kube-apiserver.service
+enable kube-controller-manager.service
+enable kube-scheduler.service
+enable kube-kubelet.service
+enable kube-proxy.service

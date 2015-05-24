@@ -1,0 +1,18 @@
+[Unit]
+Description=Kubernetes Kubelet
+Documentation=https://github.com/GoogleCloudPlatform/kubernetes
+Requires=docker.service
+After=docker.service
+Requires=kube-apiserver.service
+After=kube-apiserver.service
+
+[Service]
+EnvironmentFile=/etc/kubernetes.env
+ExecStartPre=/opt/bin/kubectl delete nodes 127.0.0.1
+ExecStartPre=/opt/bin/kubectl create -f /etc/kubernetes/node.json
+ExecStart=/opt/bin/kubelet $KUBE_KUBELET_OPTS
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

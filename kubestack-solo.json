@@ -1,0 +1,59 @@
+{
+  "variables": {
+    "coreos_install_base_url": "{{env `COREOS_INSTALL_BASE_URL`}}",
+    "kubestack_release_url": "{{env `KUBESTACK_RELEASE_URL`}}"
+  },
+  "builders": [{
+    "type": "vmware-iso",
+    "iso_url": "http://alpha.release.core-os.net/amd64-usr/681.0.0/coreos_production_iso_image.iso",
+    "iso_checksum": "7c30ff7689b7ae61466480bb8ca64921348d30be",
+    "iso_checksum_type": "sha1",
+    "boot_wait": "15s",
+    "boot_command": [
+        "sudo passwd core<enter><wait>",
+        "kubestack<enter><wait>",
+        "kubestack<enter><wait>"
+    ],
+    "headless": true,
+    "ssh_username": "core",
+    "ssh_password": "kubestack",
+    "shutdown_command": "sudo poweroff",
+    "vm_name": "kubestack-solo",
+    "vmx_data": {
+      "memsize": "1024",
+      "displayname": "kubestack"
+    }
+  }],
+  "provisioners": [{
+        "type": "file",
+        "source": "files",
+        "destination": "/tmp"
+    },
+    {
+        "type": "shell",
+        "inline": [
+            "sudo coreos-install -b {{user `coreos_install_base_url`}} -d /dev/sda -C alpha",
+            "sleep 3",
+            "sudo mount /dev/sda9 /mnt/",
+            "sudo mkdir -p /mnt/etc/kubernetes",
+            "sudo mkdir -p /mnt/opt/bin",
+            "sudo mkdir -p /mnt/etc/systemd/system-preset",
+            "sudo mkdir -p /mnt/etc/systemd/system",
+            "wget -O kubestack.tar.gz {{user `kubestack_release_url`}}",
+            "sudo tar -xvf kubestack.tar.gz -C /mnt/opt/bin",
+            "sudo mv /tmp/files/*.service /mnt/etc/systemd/system",
+            "sudo mv /tmp/files/kubernetes.preset /mnt/etc/systemd/system-preset/00-kubernetes.preset",
+            "sudo mv /tmp/files/kubernetes.env /mnt/etc/kubernetes.env",
+            "sudo mv /tmp/files/node.json /mnt/etc/kubernetes/node.json",
+            "sudo cat /tmp/files/kubestack_id_rsa.pub > /mnt/home/core/.ssh/authorized_keys",
+            "sudo chmod 600 /mnt/home/core/.ssh/authorized_keys",
+            "sudo chown root:root /mnt/etc/kubernetes.env",
+            "sudo chown root:root /mnt/etc/kubernetes/node.json",
+            "sudo chown root:root -R /mnt/etc/systemd/system",
+            "sudo chown root:root -R /mnt/opt/bin",
+            "sudo chmod +x -R /mnt/opt/bin",
+            "rm kubestack.tar.gz",
+            "rm -rf /tmp/files"
+        ]
+    }]
+}
