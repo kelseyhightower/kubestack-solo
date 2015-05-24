@@ -17,6 +17,17 @@ $ /Applications/VMware\ Fusion.app/Contents/Library/vmrun \
 
 ![Kubestack Solo Login Screen](docs/kubestack-solo-fusion.png)
 
+## Configuring networking
+
+By default the docker bridge IP is set to `10.200.10.1/24` and the Kubernetes service portal range is set to `10.200.20.1/24`. These ranges will only be assible inside the VM. In order to reach pods and services from your local Mac, run the following command to add static routes:
+
+Replace `$vm-ip-address` with the IP address of the VM running Kubestack Solo:
+
+```
+sudo route add -net 10.200.10.0 -netmask 255.255.255.0 -host $vm-ip-address
+sudo route add -net 10.200.20.0 -netmask 255.255.255.0 -host $vm-ip-address
+```
+
 ## Configure kubectl
 
 ```
