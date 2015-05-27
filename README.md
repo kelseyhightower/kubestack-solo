@@ -1,6 +1,6 @@
 # kubestack-solo
 
-This repo contains a Packer configuration template that can be used to create a Kubernetes VMware image for local testing.
+This repo contains a [Packer](https://www.packer.io) configuration template that can be used to create a Kubernetes VMware image for local testing.
 
 ## Build
 
