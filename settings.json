@@ -1,4 +1,4 @@
 {
   "coreos_install_base_url": "http://alpha.release.core-os.net/amd64-usr",
-  "kubestack_release_url": "http://storage.googleapis.com/kubestack/kubestack-0.0.2.tar.gz"
+  "kubestack_release_url": "http://storage.googleapis.com/kubestack/kubestack-0.15.0.tar.gz"
 }
